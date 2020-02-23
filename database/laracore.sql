@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2020 at 09:16 AM
+-- Generation Time: Feb 23, 2020 at 12:18 PM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.8
 
@@ -50,8 +50,7 @@ INSERT INTO `menus` (`id`, `menu_id`, `name`, `link`, `list_id`, `icon`, `status
 (22, 1, 'Role', 'roles', 'roles', 'user', 1, 1, '-'),
 (23, 1, 'Users', 'users', 'users', 'users', 1, 1, '-'),
 (24, 2, 'Beranda', 'home', 'home', 'home', 1, 1, 'Beranda'),
-(25, 2, 'Users', 'users', 'users', 'users', 1, 100, 'users'),
-(26, 2, 'Price List', 'pricelists', 'pricelist', 'credit-card', 1, 1, 'pricelist');
+(25, 2, 'Users', 'users', 'users', 'users', 1, 100, 'users');
 
 -- --------------------------------------------------------
 
@@ -108,9 +107,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', NULL, NULL),
-(2, 'uadmin', NULL, NULL),
-(13, 'member', NULL, NULL),
-(14, 'driver', NULL, NULL);
+(2, 'uadmin', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -155,9 +152,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(6, 'muhammad Alfalah', 'alan@alan.com', 'alan@alan.com', NULL, '$2y$10$uyaV09dX4tnt/4SY36twW.FACqQdaOcXjCxiGJUt337gZT9FWTAei', NULL, '2020-01-07 11:46:43', '2020-01-11 07:24:11'),
-(8, 'alin', 'alin@alin.com', 'alin@alin.com', NULL, '$2y$10$TTIvtYFwzRwPiNXqKOt.i.1WpKDT2KdqS5CuhjEKZ5LD5P1xS26iC', NULL, '2020-01-11 05:25:50', '2020-01-11 07:35:38'),
-(11, 'alan', 'asdf@asdf.com', 'asdf@asdf.com', NULL, '$2y$10$UrwV3S3KeUTXElO26jbRAOrSaP4Me4AqUz4DUlttZ9UFbmB51DTwe', NULL, '2020-01-11 06:50:43', '2020-01-11 07:30:36');
+(6, 'sadmin', 'alan@alan.com', 'admin@admin.com', NULL, '$2y$10$I1SOCxcVI0CpsDqidpB7f.rQokSAjLq6jh9X2S7mlv8ddnjZ6UBp2', NULL, '2020-01-07 11:46:43', '2020-02-23 03:06:36'),
+(8, 'alin', 'alin@alin.com', 'alin@alin.com', NULL, '$2y$10$TTIvtYFwzRwPiNXqKOt.i.1WpKDT2KdqS5CuhjEKZ5LD5P1xS26iC', NULL, '2020-01-11 05:25:50', '2020-01-11 07:35:38');
 
 --
 -- Indexes for dumped tables

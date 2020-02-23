@@ -20,17 +20,45 @@
                     <td> <?php echo $no++ ?> </td>
                     <?php foreach ($header as $key => $value) : ?>
                         <td>
-                            <?php
-                                    $attr = "";
-                                    if (is_numeric($row->$key) && ($key != 'phone' && $key != 'username'))
-                                        $attr = number_format($row->$key);
-                                    else
-                                        $attr = $row->$key;
-                                    if ($key == 'date' || $key == 'create_date' || $key == 'time')
-                                        $attr =  date("d/m/Y", $row->$key);
+                        <?php
+                                $attr = "";
+                                if (is_numeric($row->$key) && ($key != 'phone' && $key != 'username'))
+                                    $attr = number_format($row->$key);
+                                else
+                                    $attr = $row->$key;
+                                
+                                if( strpos( $key , '->' ) )
+                                {
+                                    $output = $row;
+                                    $keys = explode('->', $key );
+                                    $isValid = true;
+                                    foreach( $keys as $key )
+                                    {
+                                        if( strpos( $key , '()' ) )
+                                        {
+                                            if( $output->{$key}() == NULL ) 
+                                            {
+                                                $isValid = false;
+                                                break;
+                                            }
+                                            $output = $output->{$key}();
+                                        }
+                                        else
+                                        {
+                                            if( $output->{$key} == NULL ) 
+                                            {
+                                                $isValid = false;
+                                                break;
+                                            }
+                                            $output = $output->{$key};
+                                        }
+                                    }
+                                    if( !$isValid ) continue;
 
-                                    echo $attr;
-                                    ?>
+                                    $attr = $output;
+                                }
+                                echo $attr; 
+                        ?>
                         </td>
                     <?php endforeach; ?>
                     <?php if( isset( $action ) ):?>
@@ -64,8 +92,13 @@
                                                             break;
                                                         case "modal_form" :
                                                                 $value["modalId"] = $value["modalId"].$row->{ $value["dataParam"] };
-                                                                $value["formUrl"] = $value["formUrl"]."/".$row->{ $value["dataParam"] };
-                                                                $value["modalBody"] = view('layouts.templates.forms.form_fields', [ "formFields" => $value["formFields"], "data" => $row ] );
+                                                                $additional_dialog = ( isset( $value["additional_dialog"] ) ) ? $value["additional_dialog"] : ""  ;
+                                                                if( isset( $value["isCreateMode"] ) )
+                                                                    $value["formUrl"] = $value["formUrl"];
+                                                                else
+                                                                    $value["formUrl"] = $value["formUrl"]."/".$row->{ $value["dataParam"] };
+
+                                                                $value["modalBody"] = $additional_dialog.view('layouts.templates.forms.form_fields', [ "formFields" => $value["formFields"], "data" => $row ] );
                                                                
                                                                 echo view('layouts.templates.modals.modal', $value);
                                                             break;
@@ -91,3 +124,14 @@
         </tbody>
     </table>
 </div>
+<script>
+    var width = window.innerWidth;
+    var element = document.getElementsByClassName('table');
+    element = element[0];
+    if (width <= 600) {
+        element.classList.add('rg-table');
+    } else {
+        element.classList.remove('rg-table');
+    }
+
+</script>
