@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\S_admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use Auth;
 
 
-class HomeController extends AdminController
+class HomeController extends UserController
 {
     public function __construct()
     {

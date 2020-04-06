@@ -1,21 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\S_admin;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-use App\Model\Role;
-use App\Alert;
 use Session;
-use Route;
 
-class RoleController extends UserController
+
+class AccountController extends UserController
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,36 +17,22 @@ class RoleController extends UserController
     public function index()
     {
         ################
-        # modal
-        ################
-        $modalCreate['modalTitle']    = "Tambah Role";
-        $modalCreate['modalId']       = "create";
-        $modalCreate['formMethod']    = "post";
-        $modalCreate['formUrl']       = route('roles.store') ;
-        $modalCreate['modalBody']     = view('layouts.templates.forms.form_fields', [ 'formFields' => [
-                                                'role_name' => [
-                                                    'type' => 'text',
-                                                    'label' => 'Role Name',
-                                                    'placeholder' => 'Ex. admin/member',
-                                                    'value' => '',
-                                                ],
-                                        ]] );
-        $modalCreate = view('layouts.templates.modals.modal', $modalCreate );
-        
-        ################
         # table
         ################
         $table[ 'header' ]  = [ 
-            'role_name' => 'Role Name',
+            'account_id'  => 'id Akun',
+            'username' => 'Username',
+            'full_name'  => 'Nama',
+            'profile_pic_url'  => 'foto',
          ];
         $table[ 'number' ]  = 1;
-        $table[ 'rows' ]    = Role::get();
+        $table[ 'rows' ]    = [];//PriceList::all() ;
         $table[ 'action' ]  = [
             "modal_form" => [
                 "modalId"       => "edit",
                 "dataParam"     => "id",
-                "modalTitle"    => "Edit Role",
-                "formUrl"       => url('roles'),
+                "modalTitle"    => "Edit Price List",
+                "formUrl"       => url('pricelists'),
                 "formMethod"    => "post",
                 "buttonColor"   => "primary",
                 "formFields"    => [
@@ -64,10 +43,19 @@ class RoleController extends UserController
                     'id' => [
                         'type' => 'hidden',
                     ],
-                    'role_name' => [
+                    'name' => [
                         'type' => 'text',
-                        'label' => 'Role Name',
-                        'placeholder' => 'Ex. admin/member',
+                        'label' => 'Produk',
+                        'placeholder' => 'Ex. Plastik',
+                    ],
+                    'price' => [
+                        'type' => 'number',
+                        'label' => 'Harga',
+                    ],
+                    'unit' => [
+                        'type' => 'text',
+                        'label' => 'Satuan',
+                        'placeholder' => 'Ex. Kg',
                     ],
                 ],
             ],//modal_form
@@ -75,7 +63,7 @@ class RoleController extends UserController
                 "modalId"       => "delete",
                 "dataParam"     => "id",
                 "modalTitle"    => "Hapus",
-                "formUrl"       => url('roles'),
+                "formUrl"       => url('pricelists'),
                 "formMethod"    => "post",
                 "buttonColor"   => "danger",
                 "formFields"    => [
@@ -91,15 +79,13 @@ class RoleController extends UserController
         ];
         $table = view('layouts.templates.tables.plain_table', $table);
 
-        $this->data[ 'header_button' ]       = $modalCreate;
         $this->data[ 'contents' ]            = $table;
 
         $this->data[ 'message_alert' ] = Session::get('message');
-        $this->data[ 'page_title' ]          = 'role';
-        $this->data[ 'header' ]              = 'role';
+        $this->data[ 'page_title' ]          = 'Akun';
+        $this->data[ 'header' ]              = 'Daftar Akun';
         $this->data[ 'sub_header' ]          = '';
         return $this->render(  );
-        
     }
 
     /**
@@ -120,16 +106,7 @@ class RoleController extends UserController
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'role_name' => 'required|string|max:255',
-        ]);
-        Role::create([
-            'role_name' => $request->input('role_name'),
-        ]);
-
-        // session()->flash('message', Alert::setAlert( 1, "data berhasil di buat" ) );
-
-        return redirect()->route('roles.index')->with(['message' => Alert::setAlert( 1, "data berhasil di buat" ) ]);
+        //
     }
 
     /**
@@ -163,11 +140,7 @@ class RoleController extends UserController
      */
     public function update(Request $request, $id)
     {
-        Role::find($id)->update([
-            'role_name' => $request->input('role_name'),
-
-        ]);
-        return redirect()->route('roles.index')->with(['message' => Alert::setAlert( 1, "data berhasil di update" ) ]);
+        //
     }
 
     /**
@@ -178,7 +151,6 @@ class RoleController extends UserController
      */
     public function destroy($id)
     {
-        Role::find($id)->delete();
-        return redirect()->route('roles.index')->with(['message' => Alert::setAlert( 1, "data berhasil di hapus" ) ]);
+        //
     }
 }

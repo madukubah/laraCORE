@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\S_admin;
 
 use Illuminate\Http\Request;
-// use App\Http\Controllers\Controller;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 use Session;
 
@@ -13,7 +12,7 @@ use App\Model\Menu;
 use App\Alert;
 
 
-class MenuController extends AdminController
+class MenuController extends UserController
 {
     protected $menuModel;
     public function __construct()

@@ -8,7 +8,6 @@ class UserController extends CoreController
     public function __construct()
     {
         parent::__construct();
-        $this->middleware( [ 'auth' ] );
     }
     protected function render( $view = 'layouts.templates.contents.content' )
     {

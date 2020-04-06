@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\S_admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\UadminController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Hash;
 
 use Session;
@@ -12,9 +12,7 @@ use App\Model\Role;
 use App\Alert;
 use Auth;
 
-
-
-class UsersManagementController extends UadminController
+class UsersManagementController extends UserController
 {
     public function __construct()
     {
@@ -224,7 +222,7 @@ class UsersManagementController extends UadminController
 
         if( $request->input('_password') != NULL )
         {
-            $validationConfig[ '_password' ] = ['required', 'string', 'min:8', 'confirmed'];
+            $validationConfig[ '_password' ] = ['required', 'string', 'min:4', 'confirmed'];
         }
         
         $request->validate( $validationConfig );
